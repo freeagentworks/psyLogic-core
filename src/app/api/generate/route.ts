@@ -12,6 +12,9 @@ export const maxDuration = 60; // Allow longer generation
 export async function POST(req: Request) {
   const { tScores, mode, sloanType, attachmentStyle } = await req.json();
 
+  console.log('API Request Received:', { mode, sloanType });
+  console.log('Groq API Key exists:', !!process.env.GROQ_API_KEY);
+
   const systemPrompt = `You are an expert psychological analyst with deep knowledge of the Big Five Aspects Scale (BFAS), Attachment Theory (ECR-R), and behavior modification (SDT/HEXACO).
 Your goal is to provide a "shockingly accurate" and "actionable" analysis based on the user's personality data.
 Output format: Markdown.

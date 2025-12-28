@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useCompletion } from '@ai-sdk/react';
 import ReactMarkdown from 'react-markdown';
 import { useQuizStore } from '@/lib/store/useQuizStore';
@@ -19,8 +19,15 @@ export default function ResultPage() {
   const t = translations[language];
   const [analysisInput, setAnalysisInput] = useState<AnalysisResult | null>(null);
 
-  const { complete, completion, isLoading } = useCompletion({
+  /* 
+   * Add a ref to track if analysis has been submitted to prevent double fetching
+   * or unnecessary re-renders causing re-fetch in development StrictMode.
+   */
+  const submittedRef = useRef(false);
+
+  const { complete, completion, isLoading, error } = useCompletion({
     api: '/api/generate',
+    onError: (err) => console.error("Completion Error:", err)
   });
 
   useEffect(() => {
@@ -40,8 +47,9 @@ export default function ResultPage() {
   }, [answers, questions, mode]);
 
   useEffect(() => {
-    if (analysisInput) {
+    if (analysisInput && !submittedRef.current) {
       // Pass the full object as the body
+      submittedRef.current = true;
       complete('', { body: analysisInput as any });
     }
   }, [analysisInput, complete]);
@@ -91,6 +99,19 @@ export default function ResultPage() {
             <span className="w-2 h-8 bg-indigo-500 rounded-full" />
             {t.result.aiReport}
           </h2>
+
+          {error && (
+            <div className="p-4 bg-red-500/10 border border-red-500/30 rounded text-red-200 text-sm mb-4">
+              <p className="font-bold">Generation Error:</p>
+              <pre className="whitespace-pre-wrap">{error.message}</pre>
+              <button
+                onClick={() => complete('', { body: analysisInput as any })}
+                className="mt-2 text-xs underline hover:text-white"
+              >
+                Retry
+              </button>
+            </div>
+          )}
 
           {isLoading && !completion && (
             <div className="flex items-center gap-2 text-slate-400">

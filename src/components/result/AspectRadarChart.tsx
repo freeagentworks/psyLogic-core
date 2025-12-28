@@ -9,16 +9,16 @@ interface AspectRadarChartProps {
 
 export default function AspectRadarChart({ scores }: AspectRadarChartProps) {
   const data = [
-    { subject: 'Vol', A: scores.neuroticism.volatility, fullMark: 100 },
-    { subject: 'Wth', A: scores.neuroticism.withdrawal, fullMark: 100 },
-    { subject: 'Com', A: scores.agreeableness.compassion, fullMark: 100 },
-    { subject: 'Pol', A: scores.agreeableness.politeness, fullMark: 100 },
-    { subject: 'Ind', A: scores.conscientiousness.industriousness, fullMark: 100 },
-    { subject: 'Ord', A: scores.conscientiousness.orderliness, fullMark: 100 },
-    { subject: 'Ent', A: scores.extraversion.enthusiasm, fullMark: 100 },
-    { subject: 'Ass', A: scores.extraversion.assertiveness, fullMark: 100 },
-    { subject: 'Int', A: scores.openness.intellect, fullMark: 100 },
-    { subject: 'Opn', A: scores.openness.openness, fullMark: 100 },
+    { subject: '激昂性', A: scores.neuroticism.volatility, fullMark: 100 },
+    { subject: '抑うつ', A: scores.neuroticism.withdrawal, fullMark: 100 },
+    { subject: '共感性', A: scores.agreeableness.compassion, fullMark: 100 },
+    { subject: '礼儀', A: scores.agreeableness.politeness, fullMark: 100 },
+    { subject: '勤勉性', A: scores.conscientiousness.industriousness, fullMark: 100 },
+    { subject: '秩序性', A: scores.conscientiousness.orderliness, fullMark: 100 },
+    { subject: '熱意', A: scores.extraversion.enthusiasm, fullMark: 100 },
+    { subject: '自己主張', A: scores.extraversion.assertiveness, fullMark: 100 },
+    { subject: '知性', A: scores.openness.intellect, fullMark: 100 },
+    { subject: '開放性', A: scores.openness.openness, fullMark: 100 },
   ];
 
   return (
