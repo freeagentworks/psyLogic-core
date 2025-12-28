@@ -47,6 +47,10 @@ export default function ResultPage() {
     setAnalysisInput(finalResult);
   }, [answers, questions, mode]);
 
+  /* 
+   * Use a simple effect to trigger completion once.
+   * We rely on useCompletion's internal state management.
+   */
   useEffect(() => {
     if (analysisInput && !submittedRef.current) {
       // Pass the full object as the body

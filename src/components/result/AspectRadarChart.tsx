@@ -22,9 +22,9 @@ export default function AspectRadarChart({ scores }: AspectRadarChartProps) {
   ];
 
   return (
-    <div className="w-full h-[300px] md:h-[400px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="60%" data={data}>
+    <div className="w-full h-[300px] md:h-[400px] min-w-[300px]" style={{ contain: 'layout' }}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={300}>
+        <RadarChart cx="50%" cy="50%" outerRadius="60%" data={data} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
           <PolarGrid stroke="#334155" />
           <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
           <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />

@@ -51,7 +51,7 @@ Focus on:
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt }
     ],
-    model: "openai/gpt-oss-120b", // Using exact model name as requested
+    model: "llama-3.3-70b-versatile", // Updated model as requested using Groq SDK
     temperature: 1,
     max_completion_tokens: 4096, // Adjusted for safety
     top_p: 1,
@@ -60,16 +60,25 @@ Focus on:
   });
 
   // Convert Groq stream to a format compatible with AI SDK
-  // We can use a simple ReadableStream transformation
+  const encoder = new TextEncoder();
+
   const textStream = new ReadableStream({
     async start(controller) {
-      for await (const chunk of stream) {
-        const content = chunk.choices[0]?.delta?.content || '';
-        if (content) {
-          controller.enqueue(content);
+      try {
+        let totalChars = 0;
+        for await (const chunk of stream) {
+          const content = chunk.choices[0]?.delta?.content;
+          if (typeof content === 'string' && content.length > 0) {
+            totalChars += content.length;
+            controller.enqueue(encoder.encode(content));
+          }
         }
+      } catch (e) {
+        console.error("Stream Error:", e);
+        controller.error(e);
+      } finally {
+        controller.close();
       }
-      controller.close();
     },
   });
 
