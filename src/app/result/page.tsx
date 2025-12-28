@@ -27,7 +27,8 @@ export default function ResultPage() {
 
   const { complete, completion, isLoading, error } = useCompletion({
     api: '/api/generate',
-    onError: (err) => console.error("Completion Error:", err)
+    onError: (err) => console.error("Completion Error:", err),
+    onFinish: (prompt, result) => console.log("Completion Finished:", result?.length, "chars"),
   });
 
   useEffect(() => {

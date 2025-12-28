@@ -1,9 +1,8 @@
-import { createOpenAI } from '@ai-sdk/openai';
-import { streamText } from 'ai';
+import { Groq } from 'groq-sdk';
 
-// Create custom OpenAI provider instance for Groq
-const groq = createOpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
+
+// Initialize Groq SDK
+const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
@@ -46,11 +45,37 @@ Focus on:
 `;
   }
 
-  const result = await streamText({
-    model: groq('llama-3.3-70b-versatile'),
-    system: systemPrompt,
-    prompt: userPrompt,
+  // Use Groq SDK directly
+  const stream = await groq.chat.completions.create({
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt }
+    ],
+    model: "openai/gpt-oss-120b", // Using exact model name as requested
+    temperature: 1,
+    max_completion_tokens: 4096, // Adjusted for safety
+    top_p: 1,
+    stream: true,
+    stop: null
   });
 
-  return result.toTextStreamResponse();
+  // Convert Groq stream to a format compatible with AI SDK
+  // We can use a simple ReadableStream transformation
+  const textStream = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || '';
+        if (content) {
+          controller.enqueue(content);
+        }
+      }
+      controller.close();
+    },
+  });
+
+  return new Response(textStream, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  });
 }
