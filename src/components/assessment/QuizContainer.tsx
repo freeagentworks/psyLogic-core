@@ -62,22 +62,28 @@ export default function QuizContainer() {
       </div>
 
       <div className="mt-12 grid grid-cols-5 gap-4 w-full max-w-lg">
-        {[1, 2, 3, 4, 5].map((value) => (
-          <button
-            key={value}
-            onClick={() => setAnswer(value as AnswerValue)}
-            className={cn(
-              "aspect-square rounded-full flex items-center justify-center text-lg font-medium transition-all duration-200",
-              "border border-white/20 bg-white/5 hover:bg-white/20 hover:scale-110 active:scale-95",
-              "focus:outline-none focus:ring-2 focus:ring-white/50"
-            )}
-          >
-            {value}
-          </button>
-        ))}
+        {[1, 2, 3, 4, 5].map((value) => {
+          const isSelected = useQuizStore.getState().answers[currentQuestion.id] === value;
+          return (
+            <button
+              key={value}
+              onClick={() => setAnswer(value as AnswerValue)}
+              className={cn(
+                "aspect-square rounded-full flex items-center justify-center text-xl font-medium transition-all duration-200",
+                "border border-white/20",
+                isSelected
+                  ? "bg-white text-black scale-110 ring-4 ring-white/50 shadow-lg"
+                  : "bg-white/5 text-white hover:bg-white/20 hover:scale-110 active:scale-95",
+                "focus:outline-none focus:ring-2 focus:ring-white/50"
+              )}
+            >
+              {value}
+            </button>
+          );
+        })}
       </div>
 
-      <div className="mt-6 flex justify-between w-full max-w-lg text-xs text-slate-500 uppercase tracking-widest px-2">
+      <div className="mt-6 flex justify-between w-full max-w-lg text-sm md:text-base text-slate-400 font-medium uppercase tracking-widest px-2">
         <span>{t.assessment.disagree}</span>
         <span>{t.assessment.agree}</span>
       </div>
@@ -85,9 +91,9 @@ export default function QuizContainer() {
       {currentIndex > 0 && (
         <button
           onClick={() => useQuizStore.getState().prevQuestion()}
-          className="mt-8 text-slate-600 hover:text-white transition-colors text-sm uppercase tracking-wider flex items-center gap-2"
+          className="mt-8 text-slate-400 hover:text-white transition-colors text-lg font-light uppercase tracking-wider flex items-center gap-2"
         >
-          ← Back
+          {t.assessment.back}
         </button>
       )}
     </div>

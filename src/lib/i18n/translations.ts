@@ -24,6 +24,7 @@ export const translations = {
       disagree: "Disagree",
       agree: "Agree",
       complete: "Analysis Complete",
+      back: "Back",
     },
     result: {
       title: "Analysis Result",
@@ -60,6 +61,7 @@ export const translations = {
       disagree: "そう思わない",
       agree: "そう思う",
       complete: "分析完了",
+      back: "← 戻る",
     },
     result: {
       title: "診断結果",

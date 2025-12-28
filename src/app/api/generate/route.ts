@@ -1,12 +1,11 @@
 import { Groq } from 'groq-sdk';
 
-
 // Initialize Groq SDK
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-export const maxDuration = 60; // Allow longer generation
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const { tScores, mode, sloanType, attachmentStyle } = await req.json();
@@ -45,46 +44,51 @@ Focus on:
 `;
   }
 
-  // Use Groq SDK directly
-  const stream = await groq.chat.completions.create({
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt }
-    ],
-    model: "llama-3.3-70b-versatile", // Updated model as requested using Groq SDK
-    temperature: 1,
-    max_completion_tokens: 4096, // Adjusted for safety
-    top_p: 1,
-    stream: true,
-    stop: null
-  });
+  try {
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      model: "openai/gpt-oss-120b", // User verified model
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      stream: true,
+      stop: null
+    });
 
-  // Convert Groq stream to a format compatible with AI SDK
-  const encoder = new TextEncoder();
+    const encoder = new TextEncoder();
 
-  const textStream = new ReadableStream({
-    async start(controller) {
-      try {
-        let totalChars = 0;
-        for await (const chunk of stream) {
-          const content = chunk.choices[0]?.delta?.content;
-          if (typeof content === 'string' && content.length > 0) {
-            totalChars += content.length;
-            controller.enqueue(encoder.encode(content));
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of chatCompletion) {
+            const content = chunk.choices[0]?.delta?.content || '';
+            if (content) {
+              controller.enqueue(encoder.encode(content));
+            }
           }
+        } catch (e) {
+          console.error("Stream processing error:", e);
+          controller.error(e);
+        } finally {
+          controller.close();
         }
-      } catch (e) {
-        console.error("Stream Error:", e);
-        controller.error(e);
-      } finally {
-        controller.close();
-      }
-    },
-  });
+      },
+    });
 
-  return new Response(textStream, {
-    headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-    },
-  });
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    });
+
+  } catch (error) {
+    console.error("Groq API Error:", error);
+    return new Response(JSON.stringify({ error: 'Failed to generate analysis' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }

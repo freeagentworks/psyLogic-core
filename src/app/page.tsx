@@ -1,14 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useQuizStore } from '@/lib/store/useQuizStore';
 import { AssessmentMode } from '@/lib/types';
 import { translations } from '@/lib/i18n/translations';
 import { Globe } from 'lucide-react';
 
 export default function Home() {
-  const { setMode, language, setLanguage } = useQuizStore();
+  const { setMode, language, setLanguage, previousSession } = useQuizStore();
   const t = translations[language];
+  const [hasPreviousSession, setHasPreviousSession] = useState(false);
+
+  useEffect(() => {
+    setHasPreviousSession(!!previousSession);
+  }, [previousSession]);
 
   const handleStart = (mode: AssessmentMode) => {
     setMode(mode);
@@ -34,7 +40,7 @@ export default function Home() {
         <h1 className="text-5xl font-bold tracking-tighter sm:text-7xl text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 filter drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
           {t.common.title}
         </h1>
-        <p className="text-lg text-slate-400 max-w-md mx-auto tracking-widest uppercase text-xs">
+        <p className="text-xl md:text-2xl text-slate-400 max-w-md mx-auto tracking-widest uppercase font-light">
           {t.common.subtitle}
         </p>
       </div>
@@ -64,6 +70,20 @@ export default function Home() {
           </div>
         </Link>
       </div>
+
+      {hasPreviousSession && (
+        <button
+          onClick={() => {
+            useQuizStore.getState().restorePreviousSession();
+            // Need to use router to navigate, but we can't use useRouter hook inside this conditional easily in the return?
+            // Actually we are in a component, so we can use useRouter at top level.
+            window.location.href = '/result'; // Simple fallback or use router
+          }}
+          className="text-slate-400 hover:text-white text-base md:text-lg uppercase tracking-widest underline underline-offset-4 transition-colors font-medium"
+        >
+          {language === 'en' ? 'View Last Result' : '前回の結果を見る'}
+        </button>
+      )}
 
       <div className="absolute bottom-8 text-slate-600 text-[10px] tracking-widest uppercase">
         {t.common.poweredBy}

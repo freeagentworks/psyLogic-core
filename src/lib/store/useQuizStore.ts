@@ -73,17 +73,46 @@ export const useQuizStore = create<QuizState>()(
       },
 
       resetQuiz: () => {
+        const { answers, mode, language, isFinished } = get();
+        // Only archive if there's actually a finished result worth saving
+        let previousSession = get().previousSession;
+        if (isFinished && Object.keys(answers).length > 0) {
+          previousSession = { answers, mode, language };
+        }
+
         set({
           currentIndex: 0,
           answers: {},
-          isFinished: false
+          isFinished: false,
+          previousSession
         });
+      },
+
+      restorePreviousSession: () => {
+        const { previousSession } = get();
+        if (previousSession) {
+          set({
+            answers: previousSession.answers,
+            mode: previousSession.mode,
+            language: previousSession.language,
+            isFinished: true,
+            // Ensure questions are reloaded for the mode/lang
+            questions: getQuestions(previousSession.mode, previousSession.language)
+          });
+        }
       }
     }),
     {
       name: 'psy-logic-storage', // unique name
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ answers: state.answers, currentIndex: state.currentIndex, mode: state.mode, isFinished: state.isFinished, language: state.language }), // Only persist data, not functions or questions (which might be heavy or dynamic)
+      partialize: (state) => ({
+        answers: state.answers,
+        currentIndex: state.currentIndex,
+        mode: state.mode,
+        isFinished: state.isFinished,
+        language: state.language,
+        previousSession: state.previousSession
+      }), // Only persist data
       onRehydrateStorage: () => (state) => {
         // ensure questions are re-synced with mode/language upon load
         if (state) {

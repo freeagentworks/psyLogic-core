@@ -47,6 +47,11 @@ export interface QuizState {
   isFinished: boolean;
   mode: AssessmentMode;
   language: 'en' | 'ja';
+  previousSession?: {
+    answers: Record<string, AnswerValue>;
+    mode: AssessmentMode;
+    language: 'en' | 'ja';
+  };
 
   // Actions
   setLanguage: (language: 'en' | 'ja') => void;
@@ -55,4 +60,5 @@ export interface QuizState {
   nextQuestion: () => void;
   prevQuestion: () => void;
   resetQuiz: () => void;
+  restorePreviousSession: () => void;
 }
