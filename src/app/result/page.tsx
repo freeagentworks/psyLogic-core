@@ -14,7 +14,7 @@ import Crystal from '@/components/3d/Crystal';
 import { calculateAttachment } from '@/lib/logic/attachment';
 
 export default function ResultPage() {
-  const { answers, questions, mode, language } = useQuizStore();
+  const { answers, questions, mode, language, lastAiReport, setLastAiReport } = useQuizStore();
   const t = translations[language];
   const [analysisInput, setAnalysisInput] = useState<AnalysisResult | null>(null);
   const [aiReport, setAiReport] = useState<string>('');
@@ -42,6 +42,15 @@ export default function ResultPage() {
   useEffect(() => {
     if (analysisInput && !submittedRef.current) {
       submittedRef.current = true;
+
+      // Check if we have a saved AI report (from previous session restore)
+      if (lastAiReport) {
+        console.log('Client: Using saved AI report, length:', lastAiReport.length);
+        setAiReport(lastAiReport);
+        return;
+      }
+
+      // Otherwise, fetch a new report
       setIsLoading(true);
       setError(null);
 
@@ -55,8 +64,10 @@ export default function ResultPage() {
           if (data.error) {
             setError(data.error);
           } else {
-            setAiReport(data.text || '');
-            console.log('Client: Received AI report, length:', data.text?.length);
+            const reportText = data.text || '';
+            setAiReport(reportText);
+            setLastAiReport(reportText); // Save to store for future restore
+            console.log('Client: Received AI report, length:', reportText.length);
           }
         })
         .catch((err) => {
@@ -67,7 +78,7 @@ export default function ResultPage() {
           setIsLoading(false);
         });
     }
-  }, [analysisInput]);
+  }, [analysisInput, lastAiReport, setLastAiReport, language]);
 
 
   if (!analysisInput) return <div className="text-white flex items-center justify-center min-h-screen">{t.common.calculating}</div>;

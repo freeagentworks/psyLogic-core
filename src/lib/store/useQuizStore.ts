@@ -25,6 +25,7 @@ export const useQuizStore = create<QuizState>()(
       isFinished: false,
       mode: 'LOVE', // Default
       language: 'ja', // Default
+      lastAiReport: undefined,
 
       setLanguage: (language: 'en' | 'ja') => {
         const { mode } = get();
@@ -73,18 +74,19 @@ export const useQuizStore = create<QuizState>()(
       },
 
       resetQuiz: () => {
-        const { answers, mode, language, isFinished } = get();
+        const { answers, mode, language, isFinished, lastAiReport } = get();
         // Only archive if there's actually a finished result worth saving
         let previousSession = get().previousSession;
         if (isFinished && Object.keys(answers).length > 0) {
-          previousSession = { answers, mode, language };
+          previousSession = { answers, mode, language, aiReport: lastAiReport };
         }
 
         set({
           currentIndex: 0,
           answers: {},
           isFinished: false,
-          previousSession
+          previousSession,
+          lastAiReport: undefined
         });
       },
 
@@ -96,10 +98,15 @@ export const useQuizStore = create<QuizState>()(
             mode: previousSession.mode,
             language: previousSession.language,
             isFinished: true,
+            lastAiReport: previousSession.aiReport,
             // Ensure questions are reloaded for the mode/lang
             questions: getQuestions(previousSession.mode, previousSession.language)
           });
         }
+      },
+
+      setLastAiReport: (report: string) => {
+        set({ lastAiReport: report });
       }
     }),
     {
@@ -111,7 +118,8 @@ export const useQuizStore = create<QuizState>()(
         mode: state.mode,
         isFinished: state.isFinished,
         language: state.language,
-        previousSession: state.previousSession
+        previousSession: state.previousSession,
+        lastAiReport: state.lastAiReport
       }), // Only persist data
       onRehydrateStorage: () => (state) => {
         // ensure questions are re-synced with mode/language upon load

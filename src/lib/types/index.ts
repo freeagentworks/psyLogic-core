@@ -51,7 +51,9 @@ export interface QuizState {
     answers: Record<string, AnswerValue>;
     mode: AssessmentMode;
     language: 'en' | 'ja';
+    aiReport?: string;
   };
+  lastAiReport?: string;
 
   // Actions
   setLanguage: (language: 'en' | 'ja') => void;
@@ -61,4 +63,5 @@ export interface QuizState {
   prevQuestion: () => void;
   resetQuiz: () => void;
   restorePreviousSession: () => void;
+  setLastAiReport: (report: string) => void;
 }
