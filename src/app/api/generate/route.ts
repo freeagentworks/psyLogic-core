@@ -8,15 +8,30 @@ const groq = new Groq({
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
-  const { tScores, mode, sloanType, attachmentStyle } = await req.json();
+  const { tScores, mode, sloanType, attachmentStyle, language } = await req.json();
 
-  console.log('API Request Received:', { mode, sloanType });
+  console.log('API Request Received:', { mode, sloanType, language });
   console.log('Groq API Key exists:', !!process.env.GROQ_API_KEY);
+
+  const languageInstruction = language === 'ja'
+    ? 'You MUST respond entirely in Japanese (日本語). All analysis, headings, and explanations must be in Japanese.'
+    : 'You MUST respond entirely in English.';
 
   const systemPrompt = `You are an expert psychological analyst with deep knowledge of the Big Five Aspects Scale (BFAS), Attachment Theory (ECR-R), and behavior modification (SDT/HEXACO).
 Your goal is to provide a "shockingly accurate" and "actionable" analysis based on the user's personality data.
-Output format: Markdown.
+
+OUTPUT FORMAT RULES:
+- Use ONLY pure Markdown syntax. DO NOT use any HTML tags (no <br>, <p>, <table>, etc.).
+- Use ## for section headings, ### for subheadings.
+- Use bullet points (-) or numbered lists (1.) for lists.
+- Use **bold** for emphasis, *italic* for secondary emphasis.
+- Use > for important quotes or callouts.
+- Use --- for horizontal separators between major sections.
+- Keep paragraphs well-spaced with blank lines between them.
+
 Tone: Professional yet empathetic, slightly "edgy" or direct if needed to provoke successful behavior change.
+
+${languageInstruction}
 
 CONTEXT:
 Mode: ${mode}
@@ -45,42 +60,26 @@ Focus on:
   }
 
   try {
+    // Non-streaming request for reliability
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ],
-      model: "openai/gpt-oss-120b", // User verified model
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
-      stream: true,
+      stream: false, // Disable streaming
       stop: null
     });
 
-    const encoder = new TextEncoder();
+    const content = chatCompletion.choices[0]?.message?.content || '';
+    console.log('Generated content length:', content.length);
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of chatCompletion) {
-            const content = chunk.choices[0]?.delta?.content || '';
-            if (content) {
-              controller.enqueue(encoder.encode(content));
-            }
-          }
-        } catch (e) {
-          console.error("Stream processing error:", e);
-          controller.error(e);
-        } finally {
-          controller.close();
-        }
-      },
-    });
-
-    return new Response(stream, {
+    return new Response(JSON.stringify({ text: content }), {
       headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
+        'Content-Type': 'application/json',
       },
     });
 

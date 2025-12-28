@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { useCompletion } from '@ai-sdk/react';
 import ReactMarkdown from 'react-markdown';
 import { useQuizStore } from '@/lib/store/useQuizStore';
 import { calculateScores } from '@/lib/logic/bigFive';
@@ -18,18 +17,11 @@ export default function ResultPage() {
   const { answers, questions, mode, language } = useQuizStore();
   const t = translations[language];
   const [analysisInput, setAnalysisInput] = useState<AnalysisResult | null>(null);
+  const [aiReport, setAiReport] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  /* 
-   * Add a ref to track if analysis has been submitted to prevent double fetching
-   * or unnecessary re-renders causing re-fetch in development StrictMode.
-   */
   const submittedRef = useRef(false);
-
-  const { complete, completion, isLoading, error } = useCompletion({
-    api: '/api/generate',
-    onError: (err) => console.error("Client: Completion Error:", err),
-    onFinish: (_, result) => console.log("Client: Finished. Total length:", result?.length),
-  });
 
   useEffect(() => {
     // 1. Calculate scores
@@ -47,17 +39,35 @@ export default function ResultPage() {
     setAnalysisInput(finalResult);
   }, [answers, questions, mode]);
 
-  /* 
-   * Use a simple effect to trigger completion once.
-   * We rely on useCompletion's internal state management.
-   */
   useEffect(() => {
     if (analysisInput && !submittedRef.current) {
-      // Pass the full object as the body
       submittedRef.current = true;
-      complete('', { body: analysisInput as any });
+      setIsLoading(true);
+      setError(null);
+
+      fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...analysisInput, language }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          } else {
+            setAiReport(data.text || '');
+            console.log('Client: Received AI report, length:', data.text?.length);
+          }
+        })
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  }, [analysisInput, complete]);
+  }, [analysisInput]);
 
 
   if (!analysisInput) return <div className="text-white flex items-center justify-center min-h-screen">{t.common.calculating}</div>;
@@ -108,9 +118,15 @@ export default function ResultPage() {
           {error && (
             <div className="p-4 bg-red-500/10 border border-red-500/30 rounded text-red-200 text-sm mb-4">
               <p className="font-bold">Generation Error:</p>
-              <pre className="whitespace-pre-wrap">{error.message}</pre>
+              <pre className="whitespace-pre-wrap">{error}</pre>
               <button
-                onClick={() => complete('', { body: analysisInput as any })}
+                onClick={() => {
+                  submittedRef.current = false;
+                  setError(null);
+                  setAiReport('');
+                  // Trigger re-fetch
+                  setAnalysisInput({ ...analysisInput });
+                }}
                 className="mt-2 text-xs underline hover:text-white"
               >
                 Retry
@@ -118,15 +134,15 @@ export default function ResultPage() {
             </div>
           )}
 
-          {isLoading && !completion && (
+          {isLoading && (
             <div className="flex items-center gap-2 text-slate-400">
               <Loader2 className="animate-spin" />
               <span>{t.result.generating}</span>
             </div>
           )}
 
-          <div className="prose prose-invert prose-lg max-w-none">
-            <ReactMarkdown>{completion}</ReactMarkdown>
+          <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:text-slate-300 prose-p:leading-relaxed prose-li:text-slate-300 prose-strong:text-white prose-blockquote:border-indigo-500 prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded prose-hr:border-white/20">
+            <ReactMarkdown>{aiReport}</ReactMarkdown>
           </div>
         </div>
       </div>
