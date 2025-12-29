@@ -79,6 +79,11 @@ export default function AboutPage() {
                         </p>
                     </section>
                 </div>
+
+                <footer className="mt-20 pt-8 border-t border-white/10 text-center text-slate-500 text-sm flex gap-6 justify-center">
+                    <Link href="/terms" className="hover:text-white transition-colors">利用規約</Link>
+                    <Link href="/privacy" className="hover:text-white transition-colors">プライバシーポリシー</Link>
+                </footer>
             </div>
         </div>
     );

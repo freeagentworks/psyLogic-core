@@ -48,6 +48,8 @@ export const translations = {
       aiReport: "AI Analysis Report",
       startNew: "Start New Assessment",
       generating: "Generating insight...",
+      shareOnX: "Share on X",
+      shareText: "My personality type is {type} (SLOAN). Discover your true self with PsyLogic Core.",
     },
     aspects: {
       volatility: "Volatility",
@@ -109,6 +111,8 @@ export const translations = {
       aiReport: "AI分析レポート",
       startNew: "新しい診断を始める",
       generating: "インサイト生成中...",
+      shareOnX: "Xでシェアする",
+      shareText: "私の深層心理タイプは【{type}】でした。PsyLogic Coreで本当の自分を発見しました。",
     },
     aspects: {
       volatility: "激昂性",

@@ -158,7 +158,19 @@ export default function ResultPage() {
         </div>
       </div>
 
-      <div className="mt-12 text-center">
+      <div className="mt-12 text-center flex flex-col items-center gap-6">
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            t.result.shareText.replace('{type}', analysisInput.sloanType)
+          )}&url=${encodeURIComponent('https://psylogic-core.vercel.app')}&hashtags=PsyLogicCore,BigFive,SLOAN`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black border border-white/20 text-white font-medium hover:bg-white/10 transition-colors"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          {t.result.shareOnX}
+        </a>
+
         <Link href="/" onClick={() => useQuizStore.getState().resetQuiz()} className="inline-block px-8 py-3 rounded-full bg-white text-black font-medium hover:bg-slate-200 transition-colors">
           {t.result.startNew}
         </Link>
