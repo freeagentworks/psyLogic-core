@@ -37,6 +37,18 @@ export const translations = {
       startNew: "Start New Assessment",
       generating: "Generating insight...",
     },
+    aspects: {
+      volatility: "Volatility",
+      withdrawal: "Withdrawal",
+      compassion: "Compassion",
+      politeness: "Politeness",
+      industriousness: "Industriousness",
+      orderliness: "Orderliness",
+      enthusiasm: "Enthusiasm",
+      assertiveness: "Assertiveness",
+      intellect: "Intellect",
+      openness: "Openness",
+    },
   },
   ja: {
     common: {
@@ -73,6 +85,18 @@ export const translations = {
       aiReport: "AI分析レポート",
       startNew: "新しい診断を始める",
       generating: "インサイト生成中...",
+    },
+    aspects: {
+      volatility: "激昂性",
+      withdrawal: "抑うつ",
+      compassion: "共感性",
+      politeness: "礼儀",
+      industriousness: "勤勉性",
+      orderliness: "秩序性",
+      enthusiasm: "熱意",
+      assertiveness: "自己主張",
+      intellect: "知性",
+      openness: "開放性",
     },
   },
 };

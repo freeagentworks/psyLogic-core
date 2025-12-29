@@ -102,7 +102,7 @@ export default function ResultPage() {
 
       <div className="grid md:grid-cols-2 gap-8 mb-12 items-center">
         <div className="w-full bg-white/5 rounded-3xl p-4 border border-white/10 backdrop-blur-sm">
-          <AspectRadarChart scores={analysisInput.tScores} />
+          <AspectRadarChart scores={analysisInput.tScores} language={language} />
         </div>
 
         <div className="space-y-6">

@@ -2,23 +2,27 @@
 
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import { BigFiveAspectScores } from '@/lib/types';
+import { translations, Language } from '@/lib/i18n/translations';
 
 interface AspectRadarChartProps {
   scores: BigFiveAspectScores;
+  language: Language;
 }
 
-export default function AspectRadarChart({ scores }: AspectRadarChartProps) {
+export default function AspectRadarChart({ scores, language }: AspectRadarChartProps) {
+  const t = translations[language].aspects;
+
   const data = [
-    { subject: '激昂性', A: scores.neuroticism.volatility, fullMark: 100 },
-    { subject: '抑うつ', A: scores.neuroticism.withdrawal, fullMark: 100 },
-    { subject: '共感性', A: scores.agreeableness.compassion, fullMark: 100 },
-    { subject: '礼儀', A: scores.agreeableness.politeness, fullMark: 100 },
-    { subject: '勤勉性', A: scores.conscientiousness.industriousness, fullMark: 100 },
-    { subject: '秩序性', A: scores.conscientiousness.orderliness, fullMark: 100 },
-    { subject: '熱意', A: scores.extraversion.enthusiasm, fullMark: 100 },
-    { subject: '自己主張', A: scores.extraversion.assertiveness, fullMark: 100 },
-    { subject: '知性', A: scores.openness.intellect, fullMark: 100 },
-    { subject: '開放性', A: scores.openness.openness, fullMark: 100 },
+    { subject: t.volatility, A: scores.neuroticism.volatility, fullMark: 100 },
+    { subject: t.withdrawal, A: scores.neuroticism.withdrawal, fullMark: 100 },
+    { subject: t.compassion, A: scores.agreeableness.compassion, fullMark: 100 },
+    { subject: t.politeness, A: scores.agreeableness.politeness, fullMark: 100 },
+    { subject: t.industriousness, A: scores.conscientiousness.industriousness, fullMark: 100 },
+    { subject: t.orderliness, A: scores.conscientiousness.orderliness, fullMark: 100 },
+    { subject: t.enthusiasm, A: scores.extraversion.enthusiasm, fullMark: 100 },
+    { subject: t.assertiveness, A: scores.extraversion.assertiveness, fullMark: 100 },
+    { subject: t.intellect, A: scores.openness.intellect, fullMark: 100 },
+    { subject: t.openness, A: scores.openness.openness, fullMark: 100 },
   ];
 
   return (

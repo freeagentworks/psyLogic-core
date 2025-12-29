@@ -126,7 +126,116 @@ export const BUSINESS_QUESTIONS_JA: Question[] = [
 ];
 
 // 英語版プレースホルダー (構造は維持)
+// 英語版データ
 export const BIG_FIVE_QUESTIONS_EN: Question[] = [
-    { id: 'n_vol_1', text: "I get angry easily.", domain: 'neuroticism', aspect: 'volatility', reversed: false },
-    // ... (Full translation would go here)
+    // --- Neuroticism ---
+    // Volatility
+    { id: 'n_vol_1', text: "I get confused or annoyed by small things.", domain: 'neuroticism', aspect: 'volatility', reversed: false },
+    { id: 'n_vol_2', text: "I find it difficult to control my emotions.", domain: 'neuroticism', aspect: 'volatility', reversed: false },
+    { id: 'n_vol_3', text: "My mood changes easily.", domain: 'neuroticism', aspect: 'volatility', reversed: false },
+    { id: 'n_vol_4', text: "I rarely get angry.", domain: 'neuroticism', aspect: 'volatility', reversed: true },
+    { id: 'n_vol_5', text: "I am a calm person.", domain: 'neuroticism', aspect: 'volatility', reversed: true },
+
+    // Withdrawal
+    { id: 'n_wit_1', text: "I often feel anxious about the future.", domain: 'neuroticism', aspect: 'withdrawal', reversed: false },
+    { id: 'n_wit_2', text: "I tend to think the worst will happen.", domain: 'neuroticism', aspect: 'withdrawal', reversed: false },
+    { id: 'n_wit_3', text: "I get discouraged easily.", domain: 'neuroticism', aspect: 'withdrawal', reversed: false },
+    { id: 'n_wit_4', text: "I am confident in myself.", domain: 'neuroticism', aspect: 'withdrawal', reversed: true },
+    { id: 'n_wit_5', text: "I handle pressure well.", domain: 'neuroticism', aspect: 'withdrawal', reversed: true },
+
+    // --- Agreeableness ---
+    // Compassion
+    { id: 'a_com_1', text: "I am sensitive to the feelings of others.", domain: 'agreeableness', aspect: 'compassion', reversed: false },
+    { id: 'a_com_2', text: "I cannot ignore people who are in trouble.", domain: 'agreeableness', aspect: 'compassion', reversed: false },
+    { id: 'a_com_3', text: "I listen to others with empathy.", domain: 'agreeableness', aspect: 'compassion', reversed: false },
+    { id: 'a_com_4', text: "I am not very interested in others' problems.", domain: 'agreeableness', aspect: 'compassion', reversed: true },
+    { id: 'a_com_5', text: "I have been told I am cold-hearted.", domain: 'agreeableness', aspect: 'compassion', reversed: true },
+
+    // Politeness
+    { id: 'a_pol_1', text: "I respect authority and superiors.", domain: 'agreeableness', aspect: 'politeness', reversed: false },
+    { id: 'a_pol_2', text: "I avoid conflict with others.", domain: 'agreeableness', aspect: 'politeness', reversed: false },
+    { id: 'a_pol_3', text: "I am careful with my words.", domain: 'agreeableness', aspect: 'politeness', reversed: false },
+    { id: 'a_pol_4', text: "I speak my mind clearly.", domain: 'agreeableness', aspect: 'politeness', reversed: true },
+    { id: 'a_pol_5', text: "I try to win arguments.", domain: 'agreeableness', aspect: 'politeness', reversed: true },
+
+    // --- Conscientiousness ---
+    // Industriousness
+    { id: 'c_ind_1', text: "I always carry out my plans.", domain: 'conscientiousness', aspect: 'industriousness', reversed: false },
+    { id: 'c_ind_2', text: "I don't waste time and act efficiently.", domain: 'conscientiousness', aspect: 'industriousness', reversed: false },
+    { id: 'c_ind_3', text: "I allow myself to persist until the goal is reached.", domain: 'conscientiousness', aspect: 'industriousness', reversed: false },
+    { id: 'c_ind_4', text: "I procrastinate on things I should do.", domain: 'conscientiousness', aspect: 'industriousness', reversed: true },
+    { id: 'c_ind_5', text: "I get distracted easily.", domain: 'conscientiousness', aspect: 'industriousness', reversed: true },
+
+    // Orderliness
+    { id: 'c_ord_1', text: "I like to keep things organized.", domain: 'conscientiousness', aspect: 'orderliness', reversed: false },
+    { id: 'c_ord_2', text: "I follow rules and procedures strictly.", domain: 'conscientiousness', aspect: 'orderliness', reversed: false },
+    { id: 'c_ord_3', text: "I pay attention to details.", domain: 'conscientiousness', aspect: 'orderliness', reversed: false },
+    { id: 'c_ord_4', text: "I don't mind a messy room.", domain: 'conscientiousness', aspect: 'orderliness', reversed: true },
+    { id: 'c_ord_5', text: "I do things in a rough manner.", domain: 'conscientiousness', aspect: 'orderliness', reversed: true },
+
+    // --- Extraversion ---
+    // Enthusiasm
+    { id: 'e_ent_1', text: "I make friends easily.", domain: 'extraversion', aspect: 'enthusiasm', reversed: false },
+    { id: 'e_ent_2', text: "I love large parties and crowds.", domain: 'extraversion', aspect: 'enthusiasm', reversed: false },
+    { id: 'e_ent_3', text: "People say I'm always smiling and happy.", domain: 'extraversion', aspect: 'enthusiasm', reversed: false },
+    { id: 'e_ent_4', text: "I prefer being alone.", domain: 'extraversion', aspect: 'enthusiasm', reversed: true },
+    { id: 'e_ent_5', text: "I am not good at expressing my emotions.", domain: 'extraversion', aspect: 'enthusiasm', reversed: true },
+
+    // Assertiveness
+    { id: 'e_ass_1', text: "I like to take charge.", domain: 'extraversion', aspect: 'assertiveness', reversed: false },
+    { id: 'e_ass_2', text: "I can assert my opinion strongly.", domain: 'extraversion', aspect: 'assertiveness', reversed: false },
+    { id: 'e_ass_3', text: "I am good at persuading people.", domain: 'extraversion', aspect: 'assertiveness', reversed: false },
+    { id: 'e_ass_4', text: "I dislike being the center of attention.", domain: 'extraversion', aspect: 'assertiveness', reversed: true },
+    { id: 'e_ass_5', text: "I prefer to follow others' lead.", domain: 'extraversion', aspect: 'assertiveness', reversed: true },
+
+    // --- Openness/Intellect ---
+    // Intellect
+    { id: 'o_int_1', text: "I understand things quickly.", domain: 'openness', aspect: 'intellect', reversed: false },
+    { id: 'o_int_2', text: "I enjoy thinking about abstract ideas.", domain: 'openness', aspect: 'intellect', reversed: false },
+    { id: 'o_int_3', text: "I enjoy philosophical discussions.", domain: 'openness', aspect: 'intellect', reversed: false },
+    { id: 'o_int_4', text: "I avoid reading difficult material.", domain: 'openness', aspect: 'intellect', reversed: true },
+    { id: 'o_int_5', text: "I don't like to deal with complex problems.", domain: 'openness', aspect: 'intellect', reversed: true },
+
+    // Openness
+    { id: 'o_ope_1', text: "I am often moved by the beauty of nature.", domain: 'openness', aspect: 'openness', reversed: false },
+    { id: 'o_ope_2', text: "I get deeply immersed in art or music.", domain: 'openness', aspect: 'openness', reversed: false },
+    { id: 'o_ope_3', text: "I have a vivid imagination.", domain: 'openness', aspect: 'openness', reversed: false },
+    { id: 'o_ope_4', text: "I think daydreaming is a waste of time.", domain: 'openness', aspect: 'openness', reversed: true },
+    { id: 'o_ope_5', text: "I prefer the status quo over change.", domain: 'openness', aspect: 'openness', reversed: true },
+];
+
+export const LOVE_QUESTIONS_EN: Question[] = [
+    // Attachment Anxiety
+    { id: 'l_anx_1', text: "I worry that my partner will stop loving me.", domain: 'neuroticism', aspect: 'volatility', category: 'attachment_anxiety', reversed: false },
+    { id: 'l_anx_2', text: "I worry about being abandoned if I don't hear from them.", domain: 'neuroticism', aspect: 'withdrawal', category: 'attachment_anxiety', reversed: false },
+    { id: 'l_anx_3', text: "I feel that my partner doesn't care about me as much as I care about them.", domain: 'neuroticism', aspect: 'withdrawal', category: 'attachment_anxiety', reversed: false },
+    { id: 'l_anx_4', text: "I am very possessive.", domain: 'neuroticism', aspect: 'volatility', category: 'attachment_anxiety', reversed: false },
+    { id: 'l_anx_5', text: "I tend to underestimate my worth in relationships.", domain: 'neuroticism', aspect: 'withdrawal', category: 'attachment_anxiety', reversed: false },
+
+    // Attachment Avoidance
+    { id: 'l_avo_1', text: "I feel suffocated when a partner gets too close.", domain: 'extraversion', aspect: 'enthusiasm', category: 'attachment_avoidance', reversed: false },
+    { id: 'l_avo_2', text: "I prefer to solve things myself rather than relying on others.", domain: 'agreeableness', aspect: 'politeness', category: 'attachment_avoidance', reversed: false },
+    { id: 'l_avo_3', text: "I am not comfortable showing my deep feelings to partners.", domain: 'openness', aspect: 'openness', category: 'attachment_avoidance', reversed: false },
+    { id: 'l_avo_4', text: "I want to pull away when a partner gets too close.", domain: 'agreeableness', aspect: 'compassion', category: 'attachment_avoidance', reversed: false },
+    { id: 'l_avo_5', text: "I think depending on others is a sign of weakness.", domain: 'conscientiousness', aspect: 'industriousness', category: 'attachment_avoidance', reversed: false },
+];
+
+export const BUSINESS_QUESTIONS_EN: Question[] = [
+    // Machiavellianism / Low Honesty-Humility
+    { id: 'b_mac_1', text: "I don't mind cutting corners to get ahead.", domain: 'agreeableness', aspect: 'politeness', category: 'machiavellianism', reversed: false },
+    { id: 'b_mac_2', text: "I am willing to use others to succeed.", domain: 'agreeableness', aspect: 'compassion', category: 'machiavellianism', reversed: false },
+    { id: 'b_mac_3', text: "I am good at flattering people when it serves a purpose.", domain: 'extraversion', aspect: 'assertiveness', category: 'machiavellianism', reversed: false },
+
+    // Egoism / Status Seeking
+    { id: 'b_ego_1', text: "My own success is more important than the team's.", domain: 'extraversion', aspect: 'assertiveness', category: 'egoism', reversed: false },
+    { id: 'b_ego_2', text: "I admire luxury and high status positions.", domain: 'extraversion', aspect: 'assertiveness', category: 'egoism', reversed: false },
+
+    // Autonomy Orientation
+    { id: 'b_aut_1', text: "I find joy in the act of learning new skills.", domain: 'openness', aspect: 'intellect', category: 'autonomy', reversed: false },
+    { id: 'b_aut_2', text: "Autonomy in my work is more important than the content.", domain: 'openness', aspect: 'intellect', category: 'autonomy', reversed: false },
+    { id: 'b_aut_3', text: "I find it rewarding to tackle difficult challenges.", domain: 'conscientiousness', aspect: 'industriousness', category: 'autonomy', reversed: false },
+
+    // External Regulation
+    { id: 'b_ext_1', text: "I am motivated mainly by my boss's approval and rewards.", domain: 'conscientiousness', aspect: 'industriousness', category: 'external_regulation', reversed: false },
+    { id: 'b_ext_2', text: "I work primarily to avoid criticism or punishment.", domain: 'neuroticism', aspect: 'withdrawal', category: 'external_regulation', reversed: false },
 ];

@@ -1,14 +1,17 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { QuizState, Question, AssessmentMode } from '../types';
-import { BIG_FIVE_QUESTIONS_JA, LOVE_QUESTIONS_JA, BUSINESS_QUESTIONS_JA } from '../data/questions_full';
+import {
+  BIG_FIVE_QUESTIONS_JA, LOVE_QUESTIONS_JA, BUSINESS_QUESTIONS_JA,
+  BIG_FIVE_QUESTIONS_EN, LOVE_QUESTIONS_EN, BUSINESS_QUESTIONS_EN
+} from '../data/questions_full';
 
 // Helper to get questions
 const getQuestions = (mode: AssessmentMode, lang: 'en' | 'ja') => {
-  // Currently only fully implemented JA full set
   if (lang === 'en') {
-    // Fallback or minimal implementation for now
-    return BIG_FIVE_QUESTIONS_JA; // TODO: Implement English
+    const base = BIG_FIVE_QUESTIONS_EN;
+    const specific = mode === 'LOVE' ? LOVE_QUESTIONS_EN : BUSINESS_QUESTIONS_EN;
+    return [...base, ...specific];
   }
 
   const base = BIG_FIVE_QUESTIONS_JA;
