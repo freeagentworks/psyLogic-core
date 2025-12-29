@@ -6,6 +6,7 @@ import { useQuizStore } from '@/lib/store/useQuizStore';
 import { AssessmentMode } from '@/lib/types';
 import { translations } from '@/lib/i18n/translations';
 import { Globe } from 'lucide-react';
+import HeroObject from '@/components/3d/HeroObject';
 
 export default function Home() {
   const { setMode, language, setLanguage, previousSession } = useQuizStore();
@@ -31,12 +32,17 @@ export default function Home() {
       <button
         onClick={toggleLanguage}
         className="absolute top-8 right-8 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+        style={{ zIndex: 50 }}
       >
         <Globe size={20} />
         <span className="text-xs uppercase font-medium">{language === 'en' ? 'JP' : 'EN'}</span>
       </button>
 
-      <div className="text-center space-y-4">
+      <div className="w-full max-w-lg mb-[-20px] z-0">
+        <HeroObject />
+      </div>
+
+      <div className="text-center space-y-4 relative z-10">
         <h1 className="text-5xl font-bold tracking-tighter sm:text-7xl text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 filter drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
           {t.common.title}
         </h1>
