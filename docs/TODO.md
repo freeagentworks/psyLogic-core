@@ -24,7 +24,15 @@
 - [x] API ルート `app/api/generate/route.ts` の作成
 - [x] UI/UX の仕上げ (アニメーション, 調整)
 
-## Phase 4: Release & Optimization (リリース & 最適化)
+## Phase 4: Polish & Expansion (機能拡張 & 仕上げ)
+- [x] 多言語対応 (i18n): 日英切り替え機能の実装
+- [x] レスポンシブデザインの最適化 (Mobile/Desktop)
+- [x] Aboutページ (診断についての説明) の作成
+- [x] ソーシャルシェア機能 (X/Twitter) の実装
+- [x] 法的ページ (利用規約・プライバシーポリシー) のプレースホルダー設置
+- [x] アプリアイコン・OGP画像の刷新
+
+## Phase 5: Release (リリース)
 - [x] SEO 最適化 (Metadata)
 - [ ] パフォーマンスチューニング (3D アセット, バンドルサイズ)
-- [ ] Vercel へのデプロイ
+- [ ] Vercel へのデプロイ (環境変数設定含む)
