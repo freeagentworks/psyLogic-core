@@ -33,7 +33,7 @@ export default function BGMPlayer() {
 
     return (
         <div
-            className="fixed bottom-6 right-6 z-50 flex items-center justify-center"
+            className="fixed bottom-20 md:bottom-6 right-6 z-50 flex items-center justify-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
