@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://psylogic-core.vercel.app'),
   title: {
     default: "PsyLogic Core | 深層心理への旅",
     template: "%s | PsyLogic Core"
@@ -39,6 +39,8 @@ export const metadata: Metadata = {
   },
 };
 
+import BGMPlayer from "@/components/audio/BGMPlayer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -51,6 +53,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050505] text-white min-h-screen`}
       >
         <VoidBackground />
+        <BGMPlayer />
         <main className="relative z-10 flex flex-col min-h-screen">
           {children}
         </main>
