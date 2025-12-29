@@ -50,7 +50,7 @@ function HeroCrystal() {
 
 export default function HeroObject() {
     return (
-        <div className="w-full h-[300px] md:h-[400px] flex items-center justify-center fade-in touch-none">
+        <div className="w-full h-[220px] sm:h-[400px] flex items-center justify-center fade-in touch-none">
             <Canvas camera={{ position: [0, 0, 6], fov: 45 }} dpr={[1, 2]}>
                 {/* 画像のライティング（マゼンタとシアンのグラデーション）を再現 */}
                 <ambientLight intensity={0.2} />

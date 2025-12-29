@@ -8,6 +8,18 @@ export const translations = {
       poweredBy: "Powered by Vercel AI SDK & Big Five Aspects Scale",
       loading: "Generating insight...",
       calculating: "Calculating...",
+      aboutButton: "About Assessment",
+    },
+    about: {
+      title: "About PsyLogic Core",
+      subtitle: "Scientific Deep Psychology Analysis",
+      bigFiveTitle: "Big Five Aspects Scale",
+      bigFiveDesc: "The Big Five (Five-Factor Model) is the most scientifically validated model of personality in modern psychology. PsyLogic Core uses the '10 Aspects' scale developed specifically to break down each of the 5 traits into 2 finer sub-components, providing a high-resolution analysis.",
+      attachmentTitle: "Attachment Theory",
+      attachmentDesc: "Attachment theory explains how we bond with others. In 'Love Mode', we analyze your attachment style based on Anxiety and Avoidance dimensions to predict relationship patterns and emotional needs.",
+      sloanTitle: "SLOAN Notation",
+      sloanDesc: "SLOAN is a 5-letter code representing your Big Five traits (e.g., RLUAI). It's widely used in online communities to quickly categorize personality types.",
+      backHome: "Back to Home",
     },
     landing: {
       loveMode: {
@@ -57,6 +69,18 @@ export const translations = {
       poweredBy: "Powered by Vercel AI SDK & Big Five Aspects Scale",
       loading: "分析を生成中...",
       calculating: "計算中...",
+      aboutButton: "この診断について",
+    },
+    about: {
+      title: "PsyLogic Coreについて",
+      subtitle: "科学的根拠に基づいた深層心理分析",
+      bigFiveTitle: "ビッグファイブ・アスペクト尺度",
+      bigFiveDesc: "心理学で最も信頼性が高いとされる性格分析モデル「ビッグファイブ」を採用しています。PsyLogic Coreでは、5つの特性をさらに2つの「アスペクト」に細分化した10アスペクト尺度を使用し、より高解像度な分析を実現しています。",
+      attachmentTitle: "アタッチメント理論",
+      attachmentDesc: "愛着（アタッチメント）理論は、対人関係における絆の形成パターンを説明するものです。「Love Mode」では、不安型と回避型の2軸からあなたの愛着スタイルを特定し、恋愛傾向や感情的ニーズを可視化します。",
+      sloanTitle: "SLOAN記法",
+      sloanDesc: "SLOANは、ビッグファイブのスコアを5つのアルファベット（例：RLUAI）で表す記法です。性格タイプを簡潔に示す標準的なコードとして、多くのコミュニティで使用されています。",
+      backHome: "ホームに戻る",
     },
     landing: {
       loveMode: {
