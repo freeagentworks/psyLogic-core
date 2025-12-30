@@ -29,13 +29,20 @@ export const metadata: Metadata = {
     title: "PsyLogic Core | 深層心理への旅",
     description: "ビッグファイブとアタッチメント理論に基づく、高精度かつ没入型の深層心理分析システム。",
     siteName: "PsyLogic Core",
-    // images will be automatically picked up from opengraph-image.jpg
+    images: [
+      {
+        url: "/opengraph-image.jpg",
+        width: 1024,
+        height: 1024,
+        alt: "PsyLogic Core - 深層心理分析システム",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "PsyLogic Core | 深層心理への旅",
     description: "ビッグファイブとアタッチメント理論に基づく、高精度かつ没入型の深層心理分析システム。",
-    // images will be automatically picked up from opengraph-image.jpg
+    images: ["/opengraph-image.jpg"],
   },
 };
 
